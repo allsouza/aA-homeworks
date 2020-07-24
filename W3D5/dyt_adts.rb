@@ -94,7 +94,8 @@ class Map
     end
 
     def show
-        @map
+        @map.each { |ele| print "#{ele[0]} => #{ele[1..-1].join(", ")}, "}
+        puts
     end
 
     def delete(key)
@@ -107,26 +108,26 @@ class Map
 
 end
 
-# map1 = Map.new
+map1 = Map.new
 
-# p map1.set(1,"wow")
-# p map1.set(2,"woow")
-# p map1.set(3,"wooow")
-# p map1.set(4,"woooow")
-# p map1.set(5,"wooooow")
-# p map1
+p map1.set(1,"wow")
+p map1.set(2,"woow")
+p map1.set(3,"wooow")
+p map1.set(4,"woooow")
+p map1.set(5,"wooooow")
+p map1
 
-# p map1.get(4)
+p map1.get(4)
 
-# p map1.show
+p map1.show
 
-# p map1.set(1,"shouldnt work")
-# p map1.set(3,"shouldnt work also")
-# p map1.get(2)
-# p map1.delete(3)
-# p map1.get(3)
-# p map1.show
-# p map1.set(3,"should work now")
-# p map1.get(3)
-# p map1.show
+p map1.set(1,"shouldnt work")
+p map1.set(3,"shouldnt work also")
+p map1.get(2)
+p map1.delete(3)
+p map1.get(3)
+p map1.show
+p map1.set(3,"should work now")
+p map1.get(3)
+p map1.show
 
