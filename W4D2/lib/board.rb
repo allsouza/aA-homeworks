@@ -28,14 +28,23 @@ class Board
   def make_move(start_pos, current_player_name)
     current_player_name == name1 ? skip = 6 : skip = 13
     i = 1
-    while i <= cups[start_pos].count
-
+    while cups[start_pos].count > 0
       cups[(start_pos+i) % 13] << cups[start_pos].pop
       i += 1
     end
+    render
+    next_turn((start_pos+i-1)%13)
   end
 
   def next_turn(ending_cup_idx)
+    case ending_cup_idx
+    when @cups[ending_cup_idx].empty?
+      :switch
+    when 6 || 13
+      :prompt
+    else
+      ending_cup_idx
+    end
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
   end
 
