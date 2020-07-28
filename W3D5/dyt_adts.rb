@@ -84,7 +84,7 @@ class Map
         @map = []
     end
 
-    def set(key, value)
+    def set(key, value) #need to fix to accept new value if key exists
         @map += [[key, value]] if available?(key)
     end
 
