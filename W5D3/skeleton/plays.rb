@@ -20,16 +20,19 @@ class Play
   end
 
   def self.find_by_title(title)
-    result = PlayDBConnection.instance.execute(<<-SQL
+    result = PlayDBConnection.instance.execute(<<-SQL, title)
       SELECT * 
       FROM plays 
       WHERE title = ?
     SQL
-    Play.new(result)
+    return nil if result.length < 1
+    Play.new(result.first)
   end
 
-  def self.find_by_playwright(name)
-    result = PlayDBConnection.instance.execute(<<-SQL
+  def self.find_by_playwright(q_name)
+    id = Playwright.find_by_name(q_name)
+    raise "#{q_name} not in the database!" unless id
+    result = PlayDBConnection.instance.execute(<<-SQL, id.id)
       SELECT 
         *
       FROM
@@ -37,7 +40,7 @@ class Play
         JOIN playwrights ON
           plays.playwright_id = playwrights.id
       WHERE
-        playwrights.name LIKE name
+        playwrights.id LIKE ?
     SQL
     result.map { |play| Play.new(play) }
   end
@@ -81,15 +84,16 @@ class Playwright
   end
 
   def self.find_by_name(a_name)
-    result = PlayDBConnection.instance.execute(<<-SQL
+    result = PlayDBConnection.instance.execute(<<-SQL, a_name)
       SELECT
         *
       FROM
         playwrights
       WHERE
-        name LIKE a_name
+        name LIKE ?
     SQL
-    Playwright.new(result)
+    raise "#{a_name} is not in the database" unless result
+    Playwright.new(result.first)
   end
 
   attr_accessor :id, :name, :birth_year
@@ -108,6 +112,7 @@ class Playwright
       VALUES
         (?, ?)
     SQL
+    self.id = PlayDBConnection.instance.last_insert_row_id
   end
 
   def update
@@ -123,7 +128,16 @@ class Playwright
   end
 
   def get_plays
-    Play.find_by_playwright(self.name)
+    raise "#{self} not in database" unless self.id
+    plays = PlayDBConnection.instance.execute(<<-SQL, self.id)
+      SELECT
+        *
+      FROM
+        plays
+      WHERE
+        playwright_id = ?
+    SQL
+    plays.map { |play| Play.new(play) }
   end
 
 
