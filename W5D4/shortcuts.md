@@ -4,7 +4,7 @@
 
 * To create a new rails project
     - run
-        # rails new projectName -d=postgresql
+        # rails new -G projectName -d=postgresql
     - in GemFile add gem 'pry-rails'
     - go to config/database.yml to get db name and creat psql db to match
         # createdb DBNAME
