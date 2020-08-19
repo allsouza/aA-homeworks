@@ -50,6 +50,12 @@ RSpec.describe Capy, type: :model do
       #   expect(Capy.capys_of_the_rainbow).to include(rainbow)
       #   expect(Capy.capys_of_the_rainbow).not_to include(not_rainbow)
       # end
+      it { should include("rainbow")}
+      it { should_not include("rainbow")}
+
+      it { should validate_presence_of(:email) }
+      it { should validate_presence_of(:password_digest) }
+      it { should validate_length_of(:password > 6)}
 
       it 'should return all capys of color rainbow' do
         expect(Capy.capys_of_the_rainbow.where_values_hash).to eq({'color' => 'rainbow'})
