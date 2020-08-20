@@ -1,0 +1,21 @@
+/* PHASE 1: Header */
+
+
+.header {
+    background: red;
+    color: white;
+}
+
+.header-nav{
+    width: 900px;
+    margin: auto;
+}
+
+.header-logo {
+    float: left;
+}
+
+.header-list li{ 
+    /* float: right; */
+    padding-left: 20px;
+}
