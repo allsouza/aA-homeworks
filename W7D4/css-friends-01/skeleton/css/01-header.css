@@ -16,6 +16,6 @@
 }
 
 .header-list li{ 
-    /* float: right; */
+    float: right;
     padding-left: 20px;
 }
